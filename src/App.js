@@ -5,11 +5,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      monsters: [
-        { id: 1, name: "Frankestein" },
-        { id: 2, name: "Dracula" },
-      ],
+      monsters: [],
     };
+  }
+
+  componentDidMount() {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then(
+        (res) => res.json() // Nous convertissons en format JSON pour mieux recupérer les éléments dans un format adapté
+      )
+      // Etant donné que ce sont les utilisateurs qu'on souhaite recupérer nous mettons users mais ca aurait pu etre autre chose
+      .then((users) => this.setState({ monsters: users }))
+      .catch((e) => console.log(e));
   }
 
   render() {
