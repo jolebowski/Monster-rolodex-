@@ -30,15 +30,17 @@ class App extends Component {
   }
 
   render() {
+    const { monsters, value } = this.state;
+    const { handleChange } = this;
     {
       // console.log("in render 2 ");
     }
 
     // nous le mettons ici pour permettre de filtrer avec la list originale en utilisant le state value
-    const monsterFilter = this.state.monsters.filter((monster) =>
+    const monsterFilter = monsters.filter((monster) =>
       monster.name
         .toLocaleUpperCase()
-        .includes(this.state.value.toLocaleUpperCase("fr-FR"))
+        .includes(value.toLocaleUpperCase("fr-FR"))
     );
     console.log(monsterFilter, "monsterFilte");
     return (
@@ -46,14 +48,9 @@ class App extends Component {
         <input
           type="search"
           name="monster"
-          value={this.state.value}
+          value={value}
           placeholder="Search monsters by name"
-          onClick={() => {
-            thi.setState({
-              boolean: true,
-            });
-          }}
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
         {monsterFilter.map((monster) => {
           return (
