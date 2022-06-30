@@ -7,15 +7,14 @@ class App extends Component {
 
     this.state = {
       monsters: [],
-      monstersfilterInit: [],
       value: "",
     };
     this.handleChange = this.handleChange.bind(this);
-    console.log("in constructor 1");
+    // console.log("in constructor 1");
   }
 
   componentDidMount() {
-    console.log("in compoenentDidMount 3");
+    // console.log("in compoenentDidMount 3");
     fetch("https://jsonplaceholder.typicode.com/users")
       .then(
         (res) => res.json() // Nous convertissons en format JSON pour mieux recupérer les éléments dans un format adapté
@@ -28,25 +27,20 @@ class App extends Component {
     this.setState({
       value: e.target.value,
     });
+  }
+
+  render() {
+    {
+      // console.log("in render 2 ");
+    }
+
+    // nous le mettons ici pour permettre de filtrer avec la list originale en utilisant le state value
     const monsterFilter = this.state.monsters.filter((monster) =>
       monster.name
         .toLocaleUpperCase()
         .includes(this.state.value.toLocaleUpperCase("fr-FR"))
     );
-    this.setState({
-      monstersfilterInit: monsterFilter,
-    });
-    console.log(monsterFilter, "monsterFilter");
-  }
-
-  render() {
-    {
-      console.log("in render 2 ");
-      console.log(
-        this.state.monstersfilterInit.length > 0,
-        "this.state.monstersfilterInit.length > 0"
-      );
-    }
+    console.log(monsterFilter, "monsterFilte");
     return (
       <div className="App">
         <input
@@ -54,23 +48,20 @@ class App extends Component {
           name="monster"
           value={this.state.value}
           placeholder="Search monsters by name"
+          onClick={() => {
+            thi.setState({
+              boolean: true,
+            });
+          }}
           onChange={this.handleChange}
         />
-        {this.state.monstersfilterInit.length > 0
-          ? this.state.monstersfilterInit.map((monster) => {
-              return (
-                <div key={monster.id}>
-                  <h1>{monster.name}</h1>
-                </div>
-              );
-            })
-          : this.state.monsters.map((monster) => {
-              return (
-                <div key={monster.id}>
-                  <h1>{monster.name}</h1>
-                </div>
-              );
-            })}
+        {monsterFilter.map((monster) => {
+          return (
+            <div key={monster.id}>
+              <h1>{monster.name}</h1>
+            </div>
+          );
+        })}
       </div>
     );
   }
