@@ -1,6 +1,6 @@
 import { Component } from "react";
-import CardList from "./components/CardList";
-import SearchBox from "./components/SearchBox";
+import CardList from "./components/CardList/CardList";
+import SearchBox from "./components/SearchBox/SearchBox";
 import "./App.css";
 
 class App extends Component {
@@ -43,7 +43,7 @@ class App extends Component {
     );
 
     return (
-      <div className="App">
+      <div>
         <SearchBox onChangeHandler={handleChange} />
         <CardList monsterFilter={monsterFilter} />
       </div>
