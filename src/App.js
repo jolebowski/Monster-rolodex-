@@ -1,4 +1,6 @@
 import { Component } from "react";
+import CardList from "./components/CardList";
+import SearchBox from "./components/SearchBox";
 import "./App.css";
 
 class App extends Component {
@@ -9,7 +11,6 @@ class App extends Component {
       monsters: [],
       value: "",
     };
-    this.handleChange = this.handleChange.bind(this);
     // console.log("in constructor 1");
   }
 
@@ -23,11 +24,11 @@ class App extends Component {
       .then((users) => this.setState({ monsters: users }))
       .catch((e) => console.log(e));
   }
-  handleChange(e) {
+  handleChange = (e) => {
     this.setState({
-      value: e.target.value,
+      value: e.target.value.toLocaleUpperCase("fr-FR"),
     });
-  }
+  };
 
   render() {
     const { monsters, value } = this.state;
@@ -38,27 +39,13 @@ class App extends Component {
 
     // nous le mettons ici pour permettre de filtrer avec la list originale en utilisant le state value
     const monsterFilter = monsters.filter((monster) =>
-      monster.name
-        .toLocaleUpperCase()
-        .includes(value.toLocaleUpperCase("fr-FR"))
+      monster.name.toLocaleUpperCase().includes(value)
     );
-    console.log(monsterFilter, "monsterFilte");
+
     return (
       <div className="App">
-        <input
-          type="search"
-          name="monster"
-          value={value}
-          placeholder="Search monsters by name"
-          onChange={handleChange}
-        />
-        {monsterFilter.map((monster) => {
-          return (
-            <div key={monster.id}>
-              <h1>{monster.name}</h1>
-            </div>
-          );
-        })}
+        <SearchBox onChangeHandler={handleChange} />
+        <CardList monsterFilter={monsterFilter} />
       </div>
     );
   }
