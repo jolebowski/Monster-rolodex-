@@ -1,19 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardList from "./components/CardList/CardList";
 import SearchBox from "./components/SearchBox/SearchBox";
 import "./App.css";
 
 const App = () => {
   const [value, setValue] = useState("");
+  const [monsters, setMonters] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((users) => setMonters(users))
+      .catch((e) => console.log(e));
+  }, []);
 
   const handleChange = (e) => {
     setValue(e.target.value.toLocaleUpperCase("fr-FR"));
   };
 
+  const monsterFilter = monsters.filter((monster) =>
+    monster.name.toLocaleUpperCase().includes(value)
+  );
+
   return (
     <div>
       <h1 className="app-title">Monster rolodex</h1>
       <SearchBox onChangeHandler={handleChange} />
+      <CardList monsterFilter={monsterFilter} />
     </div>
   );
 };
