@@ -1,9 +1,19 @@
+import { useState } from "react";
+import CardList from "./components/CardList/CardList";
+import SearchBox from "./components/SearchBox/SearchBox";
 import "./App.css";
 
 const App = () => {
+  const [value, setValue] = useState("");
+
+  const handleChange = (e) => {
+    setValue(e.target.value.toLocaleUpperCase("fr-FR"));
+  };
+
   return (
     <div>
       <h1 className="app-title">Monster rolodex</h1>
+      <SearchBox onChangeHandler={handleChange} />
     </div>
   );
 };
