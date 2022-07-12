@@ -5,7 +5,7 @@ export default class Card extends Component {
   render() {
     const { id, name, email } = this.props.monster;
     return (
-      <div className="card" key={id}>
+      <div className="card">
         <img
           alt={`monster ${name}`}
           src={`https://robohash.org/${id}?set=set2`}
