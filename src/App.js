@@ -5,7 +5,10 @@ import "./App.css";
 
 const App = () => {
   const [value, setValue] = useState("");
+  // const [searchField, setSearchField] = useState("");
   const [monsters, setMonters] = useState([]);
+  //nous faisons cela parce que, au cas où cette valeur initiale serait autre, nous savons que le filtre des monstres est toujours basé sur les monstres.
+  const [filteredMonsters, setFilteredMonsters] = useState(monsters);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -14,19 +17,30 @@ const App = () => {
       .catch((e) => console.log(e));
   }, []);
 
+  useEffect(() => {
+    const newMonstersFilter = monsters.filter((monster) =>
+      monster.name.toLocaleUpperCase().includes(value)
+    );
+    setFilteredMonsters(newMonstersFilter);
+    // a travers ce log on peut bien voir que nous déclenchons cet useEffect à chaque fois qu'il y a des modifications
+    console.log(newMonstersFilter, "newMonsterFilter");
+    // ici il va filtrer à travers tous les monstres lorsque d'autres monstres changent ou lorsque le champ de recherche change.
+  }, [value, monsters]);
+
   const handleChange = (e) => {
     setValue(e.target.value.toLocaleUpperCase("fr-FR"));
   };
 
-  const monsterFilter = monsters.filter((monster) =>
-    monster.name.toLocaleUpperCase().includes(value)
-  );
+  // const handleChange2 = (e) => {
+  //   setSearchField(e.target.value.toLocaleUpperCase("fr-FR"));
+  // };
 
   return (
     <div>
       <h1 className="app-title">Monster rolodex</h1>
       <SearchBox onChangeHandler={handleChange} />
-      <CardList monsterFilter={monsterFilter} />
+      {/* <SearchBox onChangeHandler={handleChange2} /> */}
+      <CardList monsterFilter={filteredMonsters} />
     </div>
   );
 };
