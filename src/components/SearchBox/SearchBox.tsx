@@ -1,6 +1,10 @@
+import { ChangeEvent } from "react";
 import "./searchBox.css";
 
-const SearchBox = ({ onChangeHandler }) => {
+type ISeacrBoxProps = {
+  onChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void;
+};
+const SearchBox = ({ onChangeHandler }: ISeacrBoxProps) => {
   return (
     <>
       <input

@@ -18,7 +18,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const newMonstersFilter = monsters.filter((monster) =>
+    const newMonstersFilter = monsters.filter((monster: { name: string }) =>
       monster.name.toLocaleUpperCase().includes(value)
     );
     setFilteredMonsters(newMonstersFilter);
