@@ -1,10 +1,14 @@
 import Card from "../Card/Card";
+import { Monster } from "../../App";
 import "./card-container.css";
 
-const CardList = ({ monsterFilter }) => (
+type CardListProps = {
+  monsterFilter: Monster[];
+};
+
+const CardList = ({ monsterFilter }: CardListProps) => (
   <div className="card-container">
     {monsterFilter.map((monster) => {
-      console.log(monster, "moinster");
       return <Card key={monster.id} monster={monster} />;
     })}
   </div>
